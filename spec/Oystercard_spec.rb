@@ -25,14 +25,20 @@ describe Oystercard do
   end
 
   it 'can touch in and mark the card as in use' do
+    subject.top_up(2)
     subject.touch_in
     expect(subject).to be_in_use
   end
 
   it 'can touch out and mark the card as no longer in use' do
+    subject.top_up(2)
     subject.touch_in
     subject.touch_out
     expect(subject).not_to be_in_use
+  end
+
+  it 'does not touch in with insufficient balance' do
+    expect{ subject.touch_in }.to raise_error "Insufficient balance"
   end
 
 end 
